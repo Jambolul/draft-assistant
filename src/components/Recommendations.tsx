@@ -2,12 +2,10 @@ import type { Recommendation } from "../engine/recommend";
 import ChampionBadge from "./ChampionBadge";
 export default function Recommendations({
   results,
-  known,
   title = "Recommendations",
   onPick,
 }: {
   results: Recommendation[];
-  known: number;
   title?: string;
   onPick?: (id: string) => void;
 }) {
@@ -19,15 +17,9 @@ export default function Recommendations({
       <div className="section-heading">
         <div>
           <h2 id="recommendations-title">{title}</h2>
-          <p>Estimated composition fit · Not a win probability</p>
         </div>
         <span className="count-pill">{results.length} available</span>
       </div>
-      {known < 9 && (
-        <div className="info-strip">
-          Partial draft — recommendations update with each pick.
-        </div>
-      )}
       <div className="recommendation-grid">
         {results.slice(0, 3).map((result, index) => (
           <article

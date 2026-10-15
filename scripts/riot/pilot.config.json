@@ -1,0 +1,25 @@
+{
+  "datasetId": "euw-solo-26.19-26.20-diamond",
+  "reuseDatasetId": "euw-solo-26.19-pilot",
+  "retainAcceptedMatches": true,
+  "region": "EUW",
+  "platform": "euw1",
+  "routing": "europe",
+  "queueId": 420,
+  "leagueQueue": "RANKED_SOLO_5x5",
+  "patches": [
+    { "label": "26.19", "gameVersionPrefix": "16.19" },
+    { "label": "26.20", "gameVersionPrefix": "16.20" }
+  ],
+  "windowStart": "2026-09-22T00:00:00Z",
+  "windowEnd": "2026-10-22T00:00:00Z",
+  "targetMatches": 20000,
+  "rankPolicy": "seed_diamond_plus",
+  "minDurationSeconds": 300,
+  "maxSeedPlayers": 10000,
+  "seedPagesPerDivision": 10,
+  "matchesPerSeed": 5,
+  "maxDownloadedMatches": null,
+  "maxRequestsPerRun": null,
+  "requestSpacingMs": 1300
+}

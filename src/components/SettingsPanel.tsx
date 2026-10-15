@@ -43,11 +43,6 @@ export default function SettingsPanel({
       <div className="section-heading">
         <div>
           <h1>{coach ? "Team settings" : "Personal settings"}</h1>
-          <p>
-            {coach
-              ? "Name your players and build a pool for each role."
-              : "Set your role and keep a separate pool for every position."}
-          </p>
         </div>
       </div>
       <div className="settings-layout">
@@ -119,10 +114,6 @@ export default function SettingsPanel({
               </button>
             ))}
           </div>
-          <p className="settings-note">
-            Starter pools are suggestions. Edit them to match what{" "}
-            {coach ? "each player plays" : "you play"}.
-          </p>
         </aside>
         <div className="profile-content">
           {coach && (

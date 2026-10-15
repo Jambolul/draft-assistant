@@ -39,10 +39,6 @@ export default function CoachRecommendations({
       <div className="section-heading">
         <div>
           <h2 id="coach-suggestions-title">Player shortlists</h2>
-          <p>
-            Estimated fit for each open role. Each pick updates the remaining
-            pools.
-          </p>
         </div>
         <button className="text-button" onClick={onEdit}>
           Edit player pools
@@ -119,14 +115,9 @@ export default function CoachRecommendations({
           );
         })}
       </div>
-      <p className="settings-note">
-        These are individual options, not a recommended five-champion lineup.
-        Scores use editable traits and comfort; match data is not connected yet.
-      </p>
       {detail && (
         <Recommendations
           results={detail.results}
-          known={known}
           title={
             roleLabels[detail.role] +
             " · " +

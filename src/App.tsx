@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { roles, roleLabels } from "./types";
 import type { DraftWorkspace, Role, Slot } from "./types";
 import { loadSettings, sanitizeBans, storageKey } from "./state";
-import { champions, championById } from "./data/champions";
+import { championById } from "./data/champions";
 import {
   demoDraft,
   emptyDraft,
@@ -17,10 +17,11 @@ import SettingsPanel from "./components/SettingsPanel";
 import Recommendations from "./components/Recommendations";
 import CoachRecommendations from "./components/CoachRecommendations";
 import TeamProfile from "./components/TeamProfile";
+import DataPilot from "./components/DataPilot";
 
 export default function App() {
   const [settings, setSettings] = useState(loadSettings);
-  const [view, setView] = useState<"draft" | "settings">("draft");
+  const [view, setView] = useState<"draft" | "settings" | "data">("draft");
   const [picker, setPicker] = useState<Slot | "ban" | null>(null);
   const [analyzed, setAnalyzed] = useState({ solo: false, coach: false });
   const [saveFailed, setSaveFailed] = useState(false);
@@ -44,7 +45,6 @@ export default function App() {
     ? recommend(draft, pool.pool, pool.comfort, solo.role, bans)
     : [];
   const ownPick = championById.get(draft.ally[solo.role] ?? "");
-  const openRoles = roles.filter((role) => !draft.ally[role]);
   const playerNames = Object.fromEntries(
     roles.map((role) => [
       role,
@@ -121,6 +121,12 @@ export default function App() {
           >
             {isCoach ? "Team settings" : "Personal settings"}
           </button>
+          <button
+            aria-current={view === "data" ? "page" : undefined}
+            onClick={() => setView("data")}
+          >
+            Match data
+          </button>
         </nav>
       </header>
       <main id="main">
@@ -178,7 +184,6 @@ export default function App() {
                 <>
                   <div>
                     <strong>{coach.teamName || "My team"}</strong>
-                    <span>Five players. Five pools.</span>
                   </div>
                   <button
                     className="text-button"
@@ -251,23 +256,6 @@ export default function App() {
               </button>
             </div>
             <div className="analyze-bar">
-              <div>
-                <strong>
-                  {isCoach
-                    ? openRoles.length + " roles left to fill"
-                    : ownPick
-                      ? ownPick.name + " selected for " + roleLabels[solo.role]
-                      : available.length +
-                        " available in your " +
-                        roleLabels[solo.role].toLowerCase() +
-                        " pool"}
-                </strong>
-                <span className="analysis-hint">
-                  {!analysis.known
-                    ? "Add a known pick or load an example to begin."
-                    : "Trait-based estimates · Match data pending"}
-                </span>
-              </div>
               {ownPick && !isCoach ? (
                 <button
                   className="secondary-button"
@@ -324,7 +312,6 @@ export default function App() {
                   !ownPick && (
                     <Recommendations
                       results={results}
-                      known={analysis.known}
                       title={roleLabels[solo.role] + " recommendations"}
                       onPick={(id) =>
                         pick({ side: "ally", role: solo.role }, id)
@@ -336,6 +323,8 @@ export default function App() {
               </>
             )}
           </>
+        ) : view === "data" ? (
+          <DataPilot />
         ) : (
           <SettingsPanel
             key={mode}
@@ -344,15 +333,11 @@ export default function App() {
           />
         )}
       </main>
-      <footer className="app-footer">
-        <span>
-          <span className={"save-dot" + (saveFailed ? " failed" : "")} />
-          {saveFailed
-            ? "Browser saving unavailable · changes last this session"
-            : "Saved locally · Drafts and pools kept per mode"}
-        </span>
-        <span>{champions.length} champions · Estimated fit, not win rate</span>
-      </footer>
+      {saveFailed && (
+        <p className="warning" role="alert">
+          Changes could not be saved in this browser.
+        </p>
+      )}
       {picker && (
         <ChampionPicker
           slot={picker === "ban" ? { side: "ally", role: solo.role } : picker}

@@ -88,9 +88,6 @@ export default function ChampionPicker({
           </button>
         ))}
       </div>
-      <p className="picker-note">
-        {champions.length} champions · Role filters are suggestions.
-      </p>
       <div className="champion-grid">
         {matches.map((champion) => {
           const unavailable = taken.has(champion.id) && current !== champion.id;

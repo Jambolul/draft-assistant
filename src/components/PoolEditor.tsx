@@ -39,7 +39,6 @@ export default function PoolEditor({
           <h2>
             {owner} · {roleLabels[role]} pool
           </h2>
-          <p>Choose playable champions and rate comfort from 1 to 5.</p>
         </div>
         <span className="count-pill">{settings.pool.length} selected</span>
       </div>

@@ -1,41 +1,66 @@
 # Draft Assistant
 
-A local React + TypeScript MVP based on the Draft Assistant Design conversation.
+**Early version · Work in progress.** The core features work, but pick suggestions and match-data features are still being developed and refined.
 
-## Start
+A League of Legends draft planner for individual players and five-player teams. Compare champions from your own pool, see what your team needs, and understand the strengths and weaknesses of each suggested pick.
+
+**React · TypeScript · Vite**
+
+![Example SoloQ draft board](docs/images/draft-assistant.png)
+
+## Features
+
+- **SoloQ and Coach modes:** separate saved drafts for individual and team planning.
+- **Champion pools:** choose champions and rate your comfort with them for each role or team member.
+- **Pick suggestions:** compare options for each role, with strengths, weaknesses, and score breakdowns.
+- **Draft controls:** search champions, add bans, and try a built-in example. Picked or banned champions cannot be selected again.
+- **Saved locally:** drafts and settings stay in your browser without an account.
+- **Match results:** optionally collect matches and browse them by patch, champion, role, and opponent.
+
+Scores estimate how well a champion fits the draft, **not the chance of winning**. They use editable champion ratings and your comfort settings. Collected match results are shown separately and do not affect suggestions yet.
+
+## Screenshots
+
+<details>
+<summary>Recommendations</summary>
+
+![Champion recommendations with strengths and tradeoffs](docs/images/recommendations.png)
+
+</details>
+
+<details>
+<summary>Coach mode</summary>
+
+![Coach draft with shortlists for all five roles](docs/images/coach.png)
+
+</details>
+
+<details>
+<summary>Team settings</summary>
+
+![Team roster, champion pools, and player comfort settings](docs/images/team-settings.png)
+
+</details>
+
+## Run locally
+
+Requires **Node.js 24** and npm.
 
 ```sh
-npm install
+npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. Run `npm test` for engine tests and `npm run build` for the production build.
+Open the URL printed by Vite. Use **Load example → Analyze draft** to try it immediately.
 
-## MVP scope
+Run `npm test` to check the app and match-collection code. Use `npm run build` to create the website files in `dist`.
 
-- Switch between SoloQ and Coach, each with its own saved draft, side and bans.
-- Choose your blue or red side and any of the five roles in SoloQ.
-- Manually enter known picks for both teams, with duplicate-pick and banned-champion prevention.
-- Search all 173 champions from Riot's Data Dragon 16.19.1 roster snapshot.
-- Personal settings store separate champion pools and comfort ratings for all five roles.
-- Team settings hold a named five-player roster, with a separate pool and comfort ratings for each role's player.
-- Coach mode shows shortlists for every open role. Pick directly from a shortlist, inspect its reasoning, or enter a pick manually. Remaining shortlists update after each pick.
-- Add up to ten bans, remove a pick to reopen its role, and show or hide analysis.
-- Save both workspaces in this browser. Existing mid-lane settings migrate to SoloQ; the old browser entry is retained.
+## Optional match data
 
-Champion traits are provisional, hand-authored design estimates. Scores are relative composition fit, not win probabilities or lane matchup statistics. This initial version has no Riot client connection, OCR, account, backend, AI service, or API key.
+The draft planner works without an API key. Collecting matches requires a Riot API key stored in your local `.env` file. The key and collected match files are excluded from Git and are not included in this repository.
 
-The shared heuristic now accepts a target role, a player's pool and comfort, and bans. Only mid retains the existing mid-waveclear baseline; no new statistical ranking model has been introduced. The score is not comparable across role shortlists or draft states. Coach shortlists are individual options, not an optimized full lineup. Multiple saved teams, movable player profiles, joint lineup search and measured matchup/synergy priorities remain later work.
+See the [match-collection guide](docs/riot-pilot.md) to add match results to your own copy of the app, or the [champion rating guide](src/data/README.md) to adjust the pick suggestions.
 
-## Structure
+---
 
-- `src/data/championProfiles.ts`: editable, named ratings and weaknesses for every champion.
-- `src/data/README.md`: rating definitions, editing instructions and source notes.
-- `src/data/champions.ts`: champion lookup and original mid pool.
-- `src/engine/`: draft analysis and recommendation rules.
-- `src/components/`: draft board, picker, pool, and recommendation views.
-- `src/state.ts`: starter pools, per-mode persistence, migration and validation.
-
-## Next steps
-
-Validate the starting profiles and explanations against drafts you know and tune the named ratings. See [the editing guide](src/data/README.md). The dataset is local and never refreshed automatically over your edits. Next, investigate match collection and validated pick priorities; see [the data research](docs/data-and-modes-research.md). Large overall sample counts alone will not guarantee coverage of particular matchups and combinations.
+League of Legends and related game content belong to Riot Games. Draft Assistant is an independent project and is not endorsed by Riot Games.
