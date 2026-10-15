@@ -88,9 +88,7 @@ export default function DraftBoard({
                                 </small>
                               )}
                             </span>
-                            <span className="edit-symbol" aria-hidden="true">
-                              {isYou ? "YOU" : "↗"}
-                            </span>
+                            {isYou && <span className="you-label">YOU</span>}
                           </>
                         ) : (
                           <>

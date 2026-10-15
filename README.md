@@ -21,26 +21,17 @@ Scores estimate how well a champion fits the draft, **not the chance of winning*
 
 ## Screenshots
 
-<details>
-<summary>Recommendations</summary>
+### Recommendations
 
 ![Champion recommendations with strengths and tradeoffs](docs/images/recommendations.png)
 
-</details>
-
-<details>
-<summary>Coach mode</summary>
+### Coach mode
 
 ![Coach draft with shortlists for all five roles](docs/images/coach.png)
 
-</details>
-
-<details>
-<summary>Team settings</summary>
+### Team settings
 
 ![Team roster, champion pools, and player comfort settings](docs/images/team-settings.png)
-
-</details>
 
 ## Run locally
 
